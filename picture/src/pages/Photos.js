@@ -5,9 +5,9 @@ import Image from "../components/Image"
 import {Context} from "../Context"
 
 function Photos() {
-    const value = useContext(Context)
+    const {photos} = useContext(Context)
 
-    const gallery = value.map((photo,i)=> {
+    const gallery = photos.map((photo,i)=> {
         return <Image key={photo.id} img={photo} className={getClass(i)}/>
     })
     return (
