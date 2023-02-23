@@ -4,28 +4,35 @@ import { Context } from "../Context";
 
 function Image({className,img}) {
   
-    const {toggle} = useContext(Context)
+    const {toggle, addItem, removeItem} = useContext(Context)
+    const {cart} = useContext(Context) 
  
    const [hovered, setHovered] = useState(false)
-   const [icon, setIcon] = useState(false)
+
+
+   const checkItem = cart.find(x=>x.id===img.id)
+    const cartClassName = checkItem?"ri-shopping-cart-fill cart":"ri-add-circle-line cart"
+
+    
+
    const heartIcon = hovered && <i 
-   onMouseEnter={()=>setIcon(true)} 
-   onMouseLeave={()=>setIcon(false)} 
+   onMouseEnter={()=>setHovered(true)} 
+   onMouseLeave={()=>setHovered(false)} 
    className={img.isFavorite?"ri-heart-fill favorite":"ri-heart-line favorite"}
     onClick={()=>toggle(img.id)}
    > 
    </i>
    const cartIcon = hovered && <i  
-   onMouseEnter={()=>setIcon(true)} 
-   onMouseLeave={()=>setIcon(false)} 
-   className="ri-add-circle-line cart"
-   
+   onMouseEnter={()=>setHovered(true)} 
+   onMouseLeave={()=>setHovered(false)} 
+   className={cartClassName}
+    onClick={checkItem?()=>removeItem(img.id):()=>addItem(img)}
    >
    </i>
   
     return (
         <div className={`${className} image-container`}>
-            <img onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>!icon&&setHovered(false)} alt={img.url} src={img.url} className="image-grid"/>
+            <img onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)} alt={img.url} src={img.url} className="image-grid"/>
             {heartIcon}
             {cartIcon}
         </div>

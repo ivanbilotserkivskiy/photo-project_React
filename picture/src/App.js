@@ -17,7 +17,7 @@ function App() {
                 <Route  path="/cart" element={<Cart/>}/>
             </Routes>
          
-            <h1>Home Page</h1>
+    
         </div>
     )
 }

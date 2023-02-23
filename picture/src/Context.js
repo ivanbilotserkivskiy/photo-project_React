@@ -4,6 +4,7 @@ const Context = React.createContext()
 
 function ContextProvider ({children}) {
     const [photos,getPhotos] = useState([])
+    const [cartItems, setCart] = useState([])
     
 
     useEffect(()=>{
@@ -12,6 +13,20 @@ function ContextProvider ({children}) {
     .then(data=>getPhotos(data))
     },[])
 
+    function addItem (newItem) {
+        setCart(oldItems=> {
+            return [...oldItems, newItem ]
+        })
+    }
+    function removeItem (itemId) {
+        setCart(oldItems=> {
+           return oldItems.filter(item=>item.id !==itemId)
+        })
+    }
+
+    function emptyCart () {
+        setCart([])
+    }
     function toggle(id) {
         const update = photos.map(x=>{
             
@@ -27,11 +42,11 @@ function ContextProvider ({children}) {
         })
         getPhotos(update)
     } 
-    console.log(photos)
+    console.log(cartItems)
 
     
     return (
-        <Context.Provider value={{photos:photos,toggle:toggle}} >
+        <Context.Provider value={{photos:photos,toggle:toggle, addItem:addItem , cart: cartItems, removeItem:removeItem,emptyCart:emptyCart}} >
             {children}
         </Context.Provider>
     )
