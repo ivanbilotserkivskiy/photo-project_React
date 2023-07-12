@@ -27,12 +27,10 @@ function ContextProvider ({children}) {
     function emptyCart () {
         setCart([])
     }
+
     function toggle(id) {
         const update = photos.map(x=>{
-            
         if( x.id===id){
-            console.log(id)
-            console.log(x.isFavorite)
          return   {...x,isFavorite:!x.isFavorite}
         }
         else {
@@ -42,9 +40,7 @@ function ContextProvider ({children}) {
         })
         getPhotos(update)
     } 
-    console.log(cartItems)
 
-    
     return (
         <Context.Provider value={{photos:photos,toggle:toggle, addItem:addItem , cart: cartItems, removeItem:removeItem,emptyCart:emptyCart}} >
             {children}
